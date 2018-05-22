@@ -4,10 +4,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -41,6 +44,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected LinearLayout baseTitle;
     protected Toolbar toolbar;
     protected BottomNavigationBar bottomBar;
+    private DrawerLayout drawerlayout;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         } else {
             bottomBar.setVisibility(View.GONE);
         }
+        setImmerseLayout();
         onChildCreate(savedInstanceState);
     }
 
@@ -76,15 +82,31 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void setContentView(@LayoutRes int layoutResID) {
         View view = getLayoutInflater().inflate(R.layout.activity_base, null);
         super.setContentView(view);
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-            view.setFitsSystemWindows(true);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
+//        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+//            view.setFitsSystemWindows(true);
+//        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+//                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        }
         setChildContentView(layoutResID);
 
+    }
+
+    /**
+     * 设置沉浸状态栏
+     */
+    private void setImmerseLayout() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            int statusBarHeight = app.getStatusBarHeight();
+            ViewGroup contentLayout = (ViewGroup) drawerlayout.getChildAt(0);
+            contentLayout.getChildAt(1).setPadding(contentLayout.getPaddingLeft(),
+                    contentLayout.getPaddingTop() + statusBarHeight,
+                    contentLayout.getPaddingRight(),
+                    contentLayout.getPaddingBottom());
+        }
     }
 
 
@@ -98,6 +120,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         bottomBar = (BottomNavigationBar) findViewById(R.id.bottombar);
         container = (FrameLayout) findViewById(R.id.fl_activity_child_container);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        drawerlayout = (DrawerLayout) findViewById(R.id.drawerlayout);
         View childView = LayoutInflater.from(this).inflate(layoutResID, null);
         if (container != null) {
             container.removeAllViews();

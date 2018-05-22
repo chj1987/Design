@@ -62,7 +62,6 @@ public class App extends Application {
     public boolean isAutoLoginSuccess;//自动登录成功标志
 
     private static App mContext;
-    public final String uniSoundAppKey = "qtc5pxb7smvrlk255wb5hyzecaz7wf44na5an4ya";//云之声appkey
     public static Handler mMainThreadHandler;
 
     @Override
