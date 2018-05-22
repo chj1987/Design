@@ -1,5 +1,7 @@
 package com.example.chj.design.base;
 
+import android.app.Activity;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -66,8 +68,24 @@ public abstract class BaseActivity extends AppCompatActivity {
         } else {
             bottomBar.setVisibility(View.GONE);
         }
-        setImmerseLayout();
+        //setImmerseLayout();
+        setTransparentStatusBar(this);
         onChildCreate(savedInstanceState);
+    }
+
+    public static void setTransparentStatusBar(Activity activity) {
+        //5.0及以上
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            View decorView = activity.getWindow().getDecorView();
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
+            //4.4到5.0
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WindowManager.LayoutParams localLayoutParams = activity.getWindow().getAttributes();
+            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+        }
     }
 
     protected abstract boolean isNeedBottomBar();
@@ -82,15 +100,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void setContentView(@LayoutRes int layoutResID) {
         View view = getLayoutInflater().inflate(R.layout.activity_base, null);
         super.setContentView(view);
-//        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-//            view.setFitsSystemWindows(true);
-//        }
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-//                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        }
         setChildContentView(layoutResID);
-
     }
 
     /**
@@ -120,6 +130,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         bottomBar = (BottomNavigationBar) findViewById(R.id.bottombar);
         container = (FrameLayout) findViewById(R.id.fl_activity_child_container);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         drawerlayout = (DrawerLayout) findViewById(R.id.drawerlayout);
         View childView = LayoutInflater.from(this).inflate(layoutResID, null);
         if (container != null) {
