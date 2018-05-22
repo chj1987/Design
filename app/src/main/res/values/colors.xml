@@ -3,4 +3,122 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="bg_color">#f0f0f0</color>
+
+
+    <color name="tansparent_color">#00000000</color>
+
+    <color name="white_color">#ffffff</color>
+    <color name="black_color">#000000</color>
+
+    <color name="title_bg_color">#f5f5f5</color>
+    - <!--  下拉刷新颜色  -->
+    <color name="pull_down_refresh1">#fdce03</color>
+    <color name="pull_down_refresh2">#f79c0b</color>
+    <color name="pull_down_refresh3">#ee5518</color>
+    <color name="pull_down_refresh4">#e82221</color>
+    - <!--  分割线的颜色  -->
+    <color name="split_color">#b2b2b2</color>
+    - <!--  浅色分割线的颜色  -->
+    <color name="split_tint_color">#dddddd</color>
+    - <!--  向右的箭头的颜色  -->
+    <color name="arrow_color">#b2b2b2</color>
+    - <!--  深色字体颜色  -->
+    <color name="font_color_deep">#333333</color>
+    - <!--  浅色字体颜色 -->
+    <color name="font_color_tint">#666666</color>
+    - <!--  提示字体颜色 -->
+    <color name="font_color_hint">#999999</color>
+    - <!--  加载中字体颜色  -->
+    <color name="font_color_loading">#757575</color>
+    - <!--  红色字体颜色  -->
+    <color name="font_color_red">#e71e1e</color>
+    - <!--  蓝色字体颜色 -->
+    <color name="font_color_blue">#2b88e7</color>
+    - <!--  下拉非选中字体颜色  -->
+    <color name="dropdown_default_color">#848484</color>
+    - <!--  listview 按下颜色 -->
+    <color name="listview_pressed_color">#dbdbdb</color>
+    - <!--  警示颜色  -->
+    <color name="warning_color">#ff2b25</color>
+    - <!--  橙色按钮默认颜色  -->
+    <color name="orange_button_default_color">#ffb340</color>
+    - <!--  橙色按钮按下颜色  -->
+    <color name="orange_button_press_color">#f39f1f</color>
+    - <!--  红色按钮默认颜色  -->
+    <color name="red_button_default_color">#e71e1e</color>
+    - <!--  红色按钮按下颜色  -->
+    <color name="red_button_press_color">#d61515</color>
+    - <!--  dialog按钮按下颜色  -->
+    <color name="btn_pressed_color">#e1e1e1</color>
+    - <!--  输入框背景颜色默认颜色  -->
+    <color name="login_textview_border_color_default">#b3b3b3</color>
+    - <!--  输入框背景颜色激活颜色 -->
+    <color name="login_textview_border_color_activation">#ff981f</color>
+    - <!--  文本框边框颜  -->
+    <color name="default_edittext_border_color">#888888</color>
+    - <!--  文本框提示字体颜色-->
+    <color name="default_edittext_hint_color">#a8a8a8</color>
+    - <!--  title颜色-->
+    <color name="title_background">#e61a1a</color>
+    - <!--  沉浸式状态栏颜色 -->
+    <color name="immersive_background">#bf1111</color>
+    <color name="color_e7e7e7">#e7e7e7</color>
+    <color name="color_f1413a">#f1413a</color>
+    <color name="color_fafafa">#fafafa</color>
+    <color name="color_2791e9">#2791e9</color>
+    <color name="color_5a626d">#5a626d</color>
+    <color name="color_333333">#333333</color>
+    <color name="color_999999">#999999</color>
+    <color name="color_f8f8f8">#f8f8f8</color>
+    <color name="color_f0f0f0">#f0f0f0</color>
+    <color name="color_f4f4f4">#f4f4f4</color>
+    <color name="color_e53239">#e53239</color>
+    <color name="color_666666">#666666</color>
+    <color name="color_cccccc">#cccccc</color>
+    <color name="color_dddddd">#dddddd</color>
+    <color name="color_bbbbbb">#bbbbbb</color>
+    <color name="black_p50">#7f000000</color>
+    <color name="alpha30_black_color">#50000000</color>
+    <color name="alpha90_black_color">#e6000000</color>
+    <color name="color_e71e1e">#e71e1e</color>
+    <color name="color_f2d61d">#f2d61d</color>
+    <color name="color_red">#ff0000</color>
+    <color name="color_e92c2c">#e92c2c</color>
+    <color name="color_ff4141">#ff4141</color>
+    <color name="color_34ac55">#34ac55</color>
+    <color name="color_2c2c2c">#2c2c2c</color>
+    <color name="color_008000">#008000</color>
+    <color name="color_444444">#444444</color>
+    <color name="color_f7f7f7">#f7f7f7</color>
+    <color name="gray_e5e5e5">#e5e5e5</color>
+    <color name="gray_eeeeee">#eeeeee</color>
+    <color name="friend_circle_popupwindow_color">#353b3d</color>
+    <color name="friend_circle_bg_color">#ebebeb</color>
+    <color name="tab_img_normal_color">#808080</color>
+    <color name="main_icon_bg_color2">#fdab19</color>
+    <color name="attention_button_default_color">#5a95e0</color>
+    <color name="friend_circle_category_default">#727272</color>
+    <color name="friend_circle_category_selected">#ffac1c</color>
+    <color name="friend_circle_category_back">#f3f3f3</color>
+    - <!--  emoji颜色-->
+    <color name="background_tab_pressed">#6633B5E5</color>
+    <color name="indicator_color">#ff33b5e5</color>
+    <color name="friend_circle_name_color">#4b6491</color>
+    - <!--  emoji颜色-->
+    - <!--  扫码颜色-->
+    <color name="viewfinder_mask">#99000000</color>
+    <color name="result_view">#b0000000</color>
+    <color name="possible_result_points">#c0ffbd21</color>
+    <color name="capture_text_cover_bg">#99535353</color>
+    - <!--  扫码颜色-->
+    - <!--  下拉框颜色 -->
+    <color name="white">#ffffff</color>
+    <color name="gray">#cccccc</color>
+    <color name="drop_down_selected">#7B1FA2</color>
+    <color name="drop_down_unselected">#111111</color>
+    <color name="mask_color">#88888888</color>
+    <color name="check_bg">#f2f2f2</color>
+    <color name="un_press_color">#9C27B0</color>
 </resources>
