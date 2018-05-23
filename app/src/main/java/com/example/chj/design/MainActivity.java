@@ -13,7 +13,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onChildCreate(Bundle savedInstanceState) {
-
+        initToolBar("首页");
     }
 
     @Override

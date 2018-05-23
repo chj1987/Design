@@ -1,8 +1,5 @@
 package com.example.chj.design.base;
 
-import android.app.Activity;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -11,8 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -72,20 +67,20 @@ public abstract class BaseActivity extends AppCompatActivity {
         onChildCreate(savedInstanceState);
     }
 
-    public static void setTransparentStatusBar(Activity activity) {
-        //5.0及以上
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            View decorView = activity.getWindow().getDecorView();
-            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-            decorView.setSystemUiVisibility(option);
-            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
-            //4.4到5.0
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            WindowManager.LayoutParams localLayoutParams = activity.getWindow().getAttributes();
-            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
-        }
-    }
+//    public static void setTransparentStatusBar(Activity activity) {
+//        //5.0及以上
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            View decorView = activity.getWindow().getDecorView();
+//            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+//            decorView.setSystemUiVisibility(option);
+//            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
+//            //4.4到5.0
+//        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            WindowManager.LayoutParams localLayoutParams = activity.getWindow().getAttributes();
+//            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+//        }
+//    }
 
     protected abstract boolean isNeedBottomBar();
 
@@ -102,17 +97,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         setChildContentView(layoutResID);
     }
 
-    /**
-     * 设置沉浸状态栏
-     */
-    private void setImmerseLayout() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            int statusBarHeight = app.getStatusBarHeight();
-
-        }
-    }
+//    /**
+//     * 设置沉浸状态栏
+//     */
+//    private void setImmerseLayout() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            Window window = getWindow();
+//            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            int statusBarHeight = app.getStatusBarHeight();
+//        }
+//    }
 
 
     /**
@@ -126,6 +120,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         container = (FrameLayout) findViewById(R.id.fl_activity_child_container);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        }
         drawerlayout = (DrawerLayout) findViewById(R.id.drawerlayout);
         View childView = LayoutInflater.from(this).inflate(layoutResID, null);
         if (container != null) {
@@ -141,18 +140,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    /**
-     * 初始化title中间的view
-     *
-     * @param title
-     */
-    protected void initBaseTitle(String title) {
-        setTitleLayout(R.layout.layout_title);
-        titleText = (TextView) findViewById(R.id.title_text);
-        titleText.setText(title);
-        app.setMLayoutParam(titleText, app.TITLE_TEXT_WIDTH, 1f);
-        app.setMTextSize(titleText, app.TITLE_STRING_SIZE);
-    }
+//    /**
+//     * 初始化title中间的view
+//     *
+//     * @param title
+//     */
+//    protected void initBaseTitle(String title) {
+//        setTitleLayout(R.layout.layout_title);
+//        titleText = (TextView) findViewById(R.id.title_text);
+//        titleText.setText(title);
+//        app.setMLayoutParam(titleText, app.TITLE_TEXT_WIDTH, 1f);
+//        app.setMTextSize(titleText, app.TITLE_STRING_SIZE);
+//    }
 
     /**
      * 设置标题bar
