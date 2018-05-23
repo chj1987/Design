@@ -11,9 +11,7 @@
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/title_background"
-            android:fitsSystemWindows="true">
+            android:layout_height="wrap_content">
 
             <include layout="@layout/toolbar"/>
 

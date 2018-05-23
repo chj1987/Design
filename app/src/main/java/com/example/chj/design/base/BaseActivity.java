@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -69,7 +68,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             bottomBar.setVisibility(View.GONE);
         }
         //setImmerseLayout();
-        setTransparentStatusBar(this);
+        //setTransparentStatusBar(this);
         onChildCreate(savedInstanceState);
     }
 
@@ -111,11 +110,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             int statusBarHeight = app.getStatusBarHeight();
-            ViewGroup contentLayout = (ViewGroup) drawerlayout.getChildAt(0);
-            contentLayout.getChildAt(1).setPadding(contentLayout.getPaddingLeft(),
-                    contentLayout.getPaddingTop() + statusBarHeight,
-                    contentLayout.getPaddingRight(),
-                    contentLayout.getPaddingBottom());
+
         }
     }
 
