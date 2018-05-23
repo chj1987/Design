@@ -8,7 +8,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected boolean isNeedBottomBar() {
-        return true;
+        return false;
     }
 
     @Override
