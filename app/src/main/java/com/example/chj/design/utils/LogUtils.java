@@ -1,98 +1,73 @@
 package com.example.chj.design.utils;
 
-import android.util.Log;
+import com.example.chj.design.BuildConfig;
+import com.orhanobut.logger.Logger;
 
 /**
  * Created by ff on 2018/5/22.
  */
 
 public class LogUtils {
-    public static final int LEVEL_VERBOSE = 0;
-    public static final int LEVEL_DEBUG = 1;
-    public static final int LEVEL_INFO = 2;
-    public static final int LEVEL_WARNING = 3;
-    public static final int LEVEL_ERROR = 4;
-
-    public static final int LEVEL_NO_LOG = 5;
-
-    private static int mLevel = LEVEL_VERBOSE;
-
-    public static void setLogLevel(int level) {
-        mLevel = level;
-    }
-
-    public static void setIsLog(boolean isLog) {
-        mLevel = isLog ? LEVEL_VERBOSE : LEVEL_NO_LOG;
-    }
-
     public static void v(String tag, String msg) {
-        if (mLevel > LEVEL_VERBOSE) {
-            return;
+        if (BuildConfig.LOG_DEBUG) {
+            Logger.t(tag).v(msg);
         }
-        Log.v(tag, msg);
     }
 
     public static void v(String tag, String msg, Throwable throwable) {
-        if (mLevel > LEVEL_VERBOSE) {
-            return;
+        if (BuildConfig.LOG_DEBUG) {
+            Logger.t(tag).v(msg, throwable);
         }
-        Log.v(tag, msg, throwable);
     }
 
     public static void d(String tag, String msg) {
-        if (mLevel > LEVEL_DEBUG) {
-            return;
+        if (BuildConfig.LOG_DEBUG) {
+            Logger.t(tag).d(tag, msg);
         }
-        Log.d(tag, msg);
     }
 
     public static void d(String tag, String msg, Throwable throwable) {
-        if (mLevel > LEVEL_DEBUG) {
-            return;
+
+        if (BuildConfig.LOG_DEBUG) {
+            Logger.t(tag).d(tag, msg, throwable);
         }
-        Log.d(tag, msg, throwable);
+
     }
 
     public static void i(String tag, String msg) {
-        if (mLevel > LEVEL_INFO) {
-            return;
+        if (BuildConfig.LOG_DEBUG) {
+            Logger.t(tag).i(tag, msg);
         }
-        Log.i(tag, msg);
     }
 
     public static void i(String tag, String msg, Throwable throwable) {
-        if (mLevel > LEVEL_INFO) {
-            return;
+        if (BuildConfig.LOG_DEBUG) {
+            Logger.t(tag).i(tag, msg, throwable);
         }
-        Log.i(tag, msg, throwable);
     }
 
     public static void w(String tag, String msg) {
-        if (mLevel > LEVEL_WARNING) {
-            return;
+        if (BuildConfig.LOG_DEBUG) {
+            Logger.t(tag).w(tag, msg);
         }
-        Log.w(tag, msg);
     }
 
     public static void w(String tag, String msg, Throwable throwable) {
-        if (mLevel > LEVEL_WARNING) {
-            return;
+        if (BuildConfig.LOG_DEBUG) {
+            Logger.t(tag).w(tag, msg, throwable);
         }
-        Log.w(tag, msg, throwable);
     }
 
     public static void e(String tag, String msg) {
-        if (mLevel > LEVEL_ERROR) {
-            return;
+        if (BuildConfig.LOG_DEBUG) {
+            Logger.t(tag).e(tag, msg);
         }
-        Log.e(tag, msg);
     }
 
     public static void e(String tag, String msg, Throwable throwable) {
-        if (mLevel > LEVEL_ERROR) {
-            return;
+        if (BuildConfig.LOG_DEBUG) {
+            Logger.t(tag).e(tag, msg, throwable);
         }
-        Log.e(tag, msg, throwable);
     }
 }
 

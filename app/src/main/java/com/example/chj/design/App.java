@@ -23,8 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.chj.design.utils.FileUtils;
-import com.example.chj.design.utils.LogUtils;
 import com.example.chj.design.widget.CustomProgressDialog;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -70,16 +70,21 @@ public class App extends Application {
         mContext = this;
         init();
 
+        initLogger();
         mMainThreadHandler = new Handler();
-
-        //设置是否打印日志
-        LogUtils.setIsLog(BuildConfig.LOG_DEBUG);
 
         //在6.0(M)版本下直接创建应用对应的文件夹
         //在6.0(M)版本以上的需要先进行权限申请
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             FileUtils.init(this);
         }
+    }
+
+    /**
+     * 初始化Logger库
+     */
+    private void initLogger() {
+        Logger.init("com.example.chj.design");
     }
 
     public static App getApplication() {

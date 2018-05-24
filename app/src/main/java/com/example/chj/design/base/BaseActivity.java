@@ -1,8 +1,13 @@
 package com.example.chj.design.base;
 
+import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,10 +21,16 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.example.chj.design.App;
 import com.example.chj.design.R;
 import com.example.chj.design.utils.ActivityUtils;
+import com.example.chj.design.utils.PermissionListener;
+import com.example.chj.design.utils.Preconditions;
 import com.example.chj.design.widget.CustomProgressDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
 
 /**
  * Created by ff on 2018/5/22.
@@ -27,6 +38,8 @@ import butterknife.Unbinder;
 
 public abstract class BaseActivity extends AppCompatActivity {
     private static final String TAG = BaseActivity.class.getSimpleName();
+    private static final int CODE_REQUEST_PERMISSION = 1;
+    private static PermissionListener mPermissionListener;
     protected App app;
 
     //    private CustomProgressDialog dialogWait = null;
@@ -136,8 +149,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        bind.unbind();
         super.onDestroy();
+        bind.unbind();
+        ActivityUtils.removeActivity(this);
     }
 
 //    /**
@@ -181,5 +195,55 @@ public abstract class BaseActivity extends AppCompatActivity {
         titleText = (TextView) findViewById(R.id.tv_title);
         titleText.setText(title);
         app.setMTextSize(titleText, app.TITLE_STRING_SIZE);
+    }
+
+
+    public static void requestPermissions(String[] permissions, PermissionListener listener) {
+        Activity activity = ActivityUtils.getTopActivity();
+        Preconditions.checkNotNull(activity);
+        if (activity == null) {
+            return;
+        }
+        mPermissionListener = listener;
+        List<String> permissionList = new ArrayList<>();
+        for (String permission : permissions) {
+            //权限没有授权
+            if (ContextCompat.checkSelfPermission(activity, permission) != PackageManager.PERMISSION_GRANTED) {
+                permissionList.add(permission);
+            }
+        }
+        if (!permissionList.isEmpty()) {
+            ActivityCompat.requestPermissions(activity,
+                    permissionList.toArray(new String[permissionList.size()]),
+                    CODE_REQUEST_PERMISSION);
+        } else {
+            mPermissionListener.onGranted();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case CODE_REQUEST_PERMISSION:
+                if (grantResults.length > 0) {
+                    List<String> deniedPermissions = new ArrayList<>();
+                    for (int i = 0; i < grantResults.length; i++) {
+                        int result = grantResults[i];
+                        if (result != PackageManager.PERMISSION_GRANTED) {
+                            String permission = permissions[i];
+                            deniedPermissions.add(permission);
+                        }
+                    }
+                    if (deniedPermissions.isEmpty()) {
+                        mPermissionListener.onGranted();
+                    } else {
+                        mPermissionListener.onGranted(deniedPermissions);
+                    }
+                }
+                break;
+            default:
+                break;
+        }
     }
 }
