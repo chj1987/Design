@@ -2,15 +2,19 @@ package com.example.chj.design.base;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -53,7 +57,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected LinearLayout baseTitle;
     protected Toolbar toolbar;
     protected BottomNavigationBar bottomBar;
-    private DrawerLayout drawerlayout;
+    protected FloatingActionButton mFloatingActionButton;
+    protected LinearLayout mMenuLl;
+    private DrawerLayout mRootDl;
+    private ActionBarDrawerToggle toggle;
 
 
     @Override
@@ -93,6 +100,22 @@ public abstract class BaseActivity extends AppCompatActivity {
         setChildContentView(layoutResID);
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        toggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        toggle.syncState();
+    }
 
     /**
      * 加载child布局
@@ -104,13 +127,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         bottomBar = (BottomNavigationBar) findViewById(R.id.bottombar);
         container = (FrameLayout) findViewById(R.id.fl_activity_child_container);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         }
-        drawerlayout = (DrawerLayout) findViewById(R.id.drawerlayout);
         View childView = LayoutInflater.from(this).inflate(layoutResID, null);
         if (container != null) {
             container.removeAllViews();
@@ -118,6 +139,37 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    protected void initDrawer() {
+        mRootDl = (DrawerLayout) findViewById(R.id.dl_root);
+        mMenuLl = (LinearLayout) findViewById(R.id.ll_menu);
+        toggle = new ActionBarDrawerToggle(this, mRootDl, toolbar, R.string.app_name, R.string.app_name) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+        };
+        mRootDl.addDrawerListener(toggle);
+
+        DrawerLayout.LayoutParams layoutParams = (DrawerLayout.LayoutParams) mMenuLl.getLayoutParams();
+        layoutParams.width = getScreenSize()[0] / 4 * 3;
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    public int[] getScreenSize() {
+        int screenSize[] = new int[2];
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        screenSize[0] = displayMetrics.widthPixels;
+        screenSize[1] = displayMetrics.heightPixels;
+        return screenSize;
+    }
 
     @Override
     protected void onDestroy() {
@@ -156,6 +208,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         app.setMTextSize(titleText, app.TITLE_STRING_SIZE);
     }
 
+    /**
+     * 初始化title中间的view
+     *
+     * @param
+     */
+    protected void initFloatingActionButton() {
+        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_add);
+        mFloatingActionButton.setVisibility(View.VISIBLE);
+        app.setMViewMargin(mFloatingActionButton, 0, 0, 0.02f, 0.15f);
+    }
 
     public static void requestPermissions(String[] permissions, PermissionListener listener) {
         Activity activity = ActivityUtils.getTopActivity();

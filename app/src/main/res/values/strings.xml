@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Design</string>
+    <string name="open">1</string>
+    <string name="close">2</string>
 </resources>
