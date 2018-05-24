@@ -75,25 +75,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         } else {
             bottomBar.setVisibility(View.GONE);
         }
-        //setImmerseLayout();
-        //setTransparentStatusBar(this);
         onChildCreate(savedInstanceState);
     }
-
-//    public static void setTransparentStatusBar(Activity activity) {
-//        //5.0及以上
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            View decorView = activity.getWindow().getDecorView();
-//            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-//            decorView.setSystemUiVisibility(option);
-//            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
-//            //4.4到5.0
-//        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            WindowManager.LayoutParams localLayoutParams = activity.getWindow().getAttributes();
-//            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
-//        }
-//    }
 
     protected abstract boolean isNeedBottomBar();
 
@@ -109,17 +92,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.setContentView(view);
         setChildContentView(layoutResID);
     }
-
-//    /**
-//     * 设置沉浸状态栏
-//     */
-//    private void setImmerseLayout() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            Window window = getWindow();
-//            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//            int statusBarHeight = app.getStatusBarHeight();
-//        }
-//    }
 
 
     /**
@@ -153,19 +125,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         bind.unbind();
         ActivityUtils.removeActivity(this);
     }
-
-//    /**
-//     * 初始化title中间的view
-//     *
-//     * @param title
-//     */
-//    protected void initBaseTitle(String title) {
-//        setTitleLayout(R.layout.layout_title);
-//        titleText = (TextView) findViewById(R.id.title_text);
-//        titleText.setText(title);
-//        app.setMLayoutParam(titleText, app.TITLE_TEXT_WIDTH, 1f);
-//        app.setMTextSize(titleText, app.TITLE_STRING_SIZE);
-//    }
 
     /**
      * 设置标题bar
