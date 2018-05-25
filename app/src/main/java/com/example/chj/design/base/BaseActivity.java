@@ -1,6 +1,7 @@
 package com.example.chj.design.base;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -28,7 +29,6 @@ import com.example.chj.design.R;
 import com.example.chj.design.utils.ActivityUtils;
 import com.example.chj.design.utils.PermissionListener;
 import com.example.chj.design.utils.Preconditions;
-import com.example.chj.design.widget.CustomProgressDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,17 +41,15 @@ import butterknife.Unbinder;
  * Created by ff on 2018/5/22.
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements MainContract.View {
     private static final String TAG = BaseActivity.class.getSimpleName();
     private static final int CODE_REQUEST_PERMISSION = 1;
     private static PermissionListener mPermissionListener;
     protected App app;
 
-    //    private CustomProgressDialog dialogWait = null;
     //图片加载工具
     //protected ImageLoaderUtil mImageLoaderUtil;
     protected Unbinder bind;
-    protected CustomProgressDialog progressDialog;
     protected TextView titleText;
     // protected ProgressActivity viewStstus;
     protected FrameLayout container;
@@ -62,7 +60,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected LinearLayout mMenuLl;
     private DrawerLayout mRootDl;
     private ActionBarDrawerToggle toggle;
-
+    protected ProgressDialog dialogWait;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -139,6 +137,9 @@ public abstract class BaseActivity extends AppCompatActivity {
             container.removeAllViews();
             container.addView(childView);
         }
+
+        dialogWait = new ProgressDialog(this);
+        dialogWait.setCancelable(false);
     }
 
     @Override
