@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -130,6 +131,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setHomeButtonEnabled(true);
 
         }
         View childView = LayoutInflater.from(this).inflate(layoutResID, null);
@@ -137,6 +139,16 @@ public abstract class BaseActivity extends AppCompatActivity {
             container.removeAllViews();
             container.addView(childView);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // The action bar home/up actionshould open or close the drawer.
+        // ActionBarDrawerToggle will takecare of this.
+        if (toggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     protected void initDrawer() {
@@ -157,9 +169,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         DrawerLayout.LayoutParams layoutParams = (DrawerLayout.LayoutParams) mMenuLl.getLayoutParams();
         layoutParams.width = getScreenSize()[0] / 4 * 3;
-
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public int[] getScreenSize() {
