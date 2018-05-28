@@ -1,16 +1,10 @@
 package com.example.chj.design;
 
 import android.os.Bundle;
-import android.widget.TextView;
 
 import com.example.chj.design.base.BaseActivity;
 
-import butterknife.BindView;
-
 public class MainActivity extends BaseActivity {
-
-    @BindView(R.id.text)
-    TextView text;
 
     @Override
     protected int getLayoutId() {

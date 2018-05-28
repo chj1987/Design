@@ -23,8 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.chj.design.utils.FileUtils;
+import com.example.chj.design.utils.LogUtils;
 import com.example.chj.design.widget.CustomProgressDialog;
-import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -84,7 +84,7 @@ public class App extends Application {
      * 初始化Logger库
      */
     private void initLogger() {
-        Logger.init("com.example.chj.design");
+        LogUtils.init(BuildConfig.LOG_DEBUG);
     }
 
     public static App getApplication() {
