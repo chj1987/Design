@@ -41,7 +41,7 @@ import butterknife.Unbinder;
  * Created by ff on 2018/5/22.
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements MainContract.View {
+public abstract class BaseActivity extends AppCompatActivity {
     private static final String TAG = BaseActivity.class.getSimpleName();
     private static final int CODE_REQUEST_PERMISSION = 1;
     private static PermissionListener mPermissionListener;

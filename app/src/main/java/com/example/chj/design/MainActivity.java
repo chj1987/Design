@@ -1,7 +1,6 @@
 package com.example.chj.design;
 
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.chj.design.base.BaseActivity;
@@ -12,12 +11,6 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.text)
     TextView text;
-    @BindView(R.id.btn_success)
-    Button btnSuccess;
-    @BindView(R.id.btn_failure)
-    Button btnFailure;
-    @BindView(R.id.btn_error)
-    Button btnError;
 
     @Override
     protected int getLayoutId() {
