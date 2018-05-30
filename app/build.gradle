@@ -70,4 +70,6 @@ dependencies {
     compile 'com.ashokvarma.android:bottom-navigation-bar:2.0.2'
     /* Log */
     compile 'com.orhanobut:logger:1.15'
+
+    compile 'com.airbnb.android:lottie:1.0.1'
 }
