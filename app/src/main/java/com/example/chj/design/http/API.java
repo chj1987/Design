@@ -5,8 +5,7 @@ package com.example.chj.design.http;
  */
 
 public interface API {
-    String BASE_URL = "";
-
+    String BASE_URL = "https://api.douban.com/v2/movie/";
 
 
 }

@@ -5,5 +5,7 @@ package com.example.chj.design.base;
  */
 
 public interface BasePresenter {
-    void start();
+    void subscribe();
+
+    void unSubscribe();
 }

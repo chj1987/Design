@@ -3,8 +3,11 @@ package com.example.chj.design;
 import android.os.Bundle;
 
 import com.example.chj.design.base.BaseActivity;
+import com.example.chj.design.model.source.Remote.RemoteResponsitoryImpl;
 
 public class MainActivity extends BaseActivity {
+
+    private RemoteResponsitoryImpl instance;
 
     @Override
     protected int getLayoutId() {
@@ -21,5 +24,6 @@ public class MainActivity extends BaseActivity {
         initToolBar("首页");
         initFloatingActionButton();
         initDrawer();
+
     }
 }
