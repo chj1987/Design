@@ -10,6 +10,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -61,36 +63,50 @@ public abstract class BaseActivity extends AppCompatActivity {
     private DrawerLayout mRootDl;
     private ActionBarDrawerToggle toggle;
     protected ProgressDialog dialogWait;
+    private Fragment mFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         app = (App) getApplication();
         //mImageLoaderUtil = new ImageLoaderUtil();
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutId());
-        bind = ButterKnife.bind(this);
-        ActivityUtils.addActivity(this);
 
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            initParms(bundle);
-        }
-        toolbar.setTitle("");
-        if (isNeedBottomBar()) {
-            bottomBar.setVisibility(View.VISIBLE);
+        if (initBundle(getIntent().getExtras())) {
+            setContentView(getLayoutId());
+            bind = ButterKnife.bind(this);
+            ActivityUtils.addActivity(this);
+
+            initWindow();
+
+            initWidget();
+            toolbar.setTitle("");
+            if (isNeedBottomBar()) {
+                bottomBar.setVisibility(View.VISIBLE);
+            } else {
+                bottomBar.setVisibility(View.GONE);
+            }
+            onChildCreate(savedInstanceState);
         } else {
-            bottomBar.setVisibility(View.GONE);
+            finish();
         }
-        onChildCreate(savedInstanceState);
+    }
+
+    private void initWidget() {
+
+    }
+
+    private void initWindow() {
+
+    }
+
+    private boolean initBundle(Bundle extras) {
+        return true;
     }
 
     protected abstract boolean isNeedBottomBar();
 
     protected abstract void onChildCreate(Bundle savedInstanceState);
 
-    protected void initParms(Bundle bundle) {
-
-    }
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
@@ -276,5 +292,39 @@ public abstract class BaseActivity extends AppCompatActivity {
             default:
                 break;
         }
+    }
+
+
+    /**
+     * @param frameLayoutID
+     * @param fragment
+     */
+    protected void addFragment(int frameLayoutID, Fragment fragment) {
+        if (fragment != null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            if (fragment.isAdded()) {
+                if (mFragment != null) {
+                    transaction.hide(mFragment).show(fragment);
+                } else {
+                    transaction.add(frameLayoutID, fragment);
+                }
+            } else {
+                if (mFragment != null) {
+                    transaction.hide(mFragment).show(fragment);
+                } else {
+                    transaction.add(frameLayoutID, fragment);
+                }
+            }
+            mFragment = fragment;
+            transaction.commit();
+        } else {
+            new NullPointerException("fragment is not null");
+        }
+    }
+
+    protected void replaceFragment(int frameLayoutId, Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(frameLayoutId, fragment);
+        transaction.commit();
     }
 }
