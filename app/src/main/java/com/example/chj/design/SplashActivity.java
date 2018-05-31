@@ -33,6 +33,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animator) {
                 startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                finish();
             }
 
             @Override
@@ -45,5 +46,9 @@ public class SplashActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 }
