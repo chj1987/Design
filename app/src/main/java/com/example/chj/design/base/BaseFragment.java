@@ -61,26 +61,26 @@ public abstract class BaseFragment extends Fragment {
         return mRoot;
     }
 
-    private void initData() {
+    protected void initData() {
 
     }
 
 
-    private void initWidget(View root) {
+    protected void initWidget(View root) {
 
     }
 
-    private void onRestartaInstance(Bundle savedInstanceState) {
+    protected void onRestartaInstance(Bundle savedInstanceState) {
 
     }
 
-    private void onBandViewBefore(View root) {
+    protected void onBandViewBefore(View root) {
 
     }
 
     protected abstract int getLayoutID();
 
-    private void initBundle(Bundle bundle) {
+    protected void initBundle(Bundle bundle) {
 
     }
 

@@ -91,15 +91,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    private void initWidget() {
+    protected void initWidget() {
 
     }
 
-    private void initWindow() {
+    protected void initWindow() {
 
     }
 
-    private boolean initBundle(Bundle extras) {
+    protected boolean initBundle(Bundle extras) {
         return true;
     }
 

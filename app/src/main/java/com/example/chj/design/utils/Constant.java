@@ -10,4 +10,6 @@ public class Constant {
     public static int MAX_STALE = 60 * 60 * 24 * 28;//没有网络的情况下，缓存失效的时间为4周
 
     public static long DEFAULT_TIMEOUT = 5;//网络连接超时
+    public static String KEY_CONFIG = "config";
+    public static String KEY_ISFIRST = "isFirst";
 }
