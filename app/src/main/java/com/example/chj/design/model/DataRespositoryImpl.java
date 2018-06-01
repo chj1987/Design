@@ -1,6 +1,7 @@
-package com.example.chj.design.model.source;
+package com.example.chj.design.model;
 
 import com.example.chj.design.model.entity.Book;
+import com.example.chj.design.model.source.IDataSource;
 import com.example.chj.design.utils.Preconditions;
 
 import io.reactivex.Flowable;
@@ -37,5 +38,4 @@ public class DataRespositoryImpl implements IDataSource {
     private Flowable<Book> getDataFromRemote() {
         return mRemoteDataSource.getBook();
     }
-
 }
