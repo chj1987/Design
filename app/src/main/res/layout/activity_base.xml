@@ -17,23 +17,6 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:src="@mipmap/ic_toolbar_add"
-            android:visibility="gone"
-            app:layout_behavior="com.example.chj.design.widget.behavior.NestedFABBehavior" />
-
-        <com.ashokvarma.bottomnavigation.BottomNavigationBar
-            android:id="@+id/bottombar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@color/alpha30_black_color">
-
-        </com.ashokvarma.bottomnavigation.BottomNavigationBar>
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nested_scrollview"
@@ -44,10 +27,24 @@
             <FrameLayout
                 android:id="@+id/fl_activity_child_container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </FrameLayout>
+                android:layout_height="match_parent" />
         </android.support.v4.widget.NestedScrollView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:src="@mipmap/ic_toolbar_add"
+            android:visibility="invisible"
+            app:layout_behavior="com.example.chj.design.widget.behavior.NestedFloatingActionButtonBehavior" />
+
+        <com.ashokvarma.bottomnavigation.BottomNavigationBar
+            android:id="@+id/bottombar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/alpha30_black_color" />
     </android.support.design.widget.CoordinatorLayout>
 
     <LinearLayout

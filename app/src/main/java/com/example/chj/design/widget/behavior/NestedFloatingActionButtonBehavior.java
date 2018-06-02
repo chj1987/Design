@@ -11,9 +11,9 @@ import android.view.View;
  * Created by ff on 2018/5/30.
  */
 
-public class NestedFABBehavior extends FloatingActionButton.Behavior {
+public class NestedFloatingActionButtonBehavior extends FloatingActionButton.Behavior {
 
-    public NestedFABBehavior(Context context, AttributeSet attrs) {
+    public NestedFloatingActionButtonBehavior(Context context, AttributeSet attrs) {
         super();
     }
 
@@ -29,10 +29,10 @@ public class NestedFABBehavior extends FloatingActionButton.Behavior {
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
         if (dyConsumed > 0 && child.getVisibility() == View.VISIBLE) {
             //系统FAB控件提供的隐藏动画
-            child.hide();
+            child.setVisibility(View.INVISIBLE);
         } else if (dyConsumed < 0 && child.getVisibility() != View.VISIBLE) {
             //系统FAB控件提供的显示动画
-            child.show();
+            child.setVisibility(View.VISIBLE);
         }
     }
 }

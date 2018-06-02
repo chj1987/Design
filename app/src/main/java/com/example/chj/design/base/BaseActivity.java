@@ -48,7 +48,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private static final String TAG = BaseActivity.class.getSimpleName();
     private static final int CODE_REQUEST_PERMISSION = 1;
     private static PermissionListener mPermissionListener;
-    protected App app;
+    public App app;
 
     //图片加载工具
     //protected ImageLoaderUtil mImageLoaderUtil;
