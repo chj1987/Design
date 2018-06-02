@@ -15,7 +15,7 @@ public interface VideoFragmentContract {
     interface View extends BaseView<Presenter> {
         void showLoading();
 
-        void hitLoading();
+        void hideLoading();
 
         void showVideoList(Book book);
 

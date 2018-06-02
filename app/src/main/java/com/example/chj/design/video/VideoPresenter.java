@@ -45,6 +45,7 @@ public class VideoPresenter implements VideoFragmentContract.Presenter {
 
     @Override
     public void getVideoList() {
+        mVideoFragmentView.showLoading();
         mDataRespository
                 .getVideoLists()
                 .subscribeOn(Schedulers.io())
@@ -68,6 +69,7 @@ public class VideoPresenter implements VideoFragmentContract.Presenter {
                         }
 
                         mVideoFragmentView.showVideoLists(itemArrayList);
+                        mVideoFragmentView.hideLoading();
                     }
 
                     @Override

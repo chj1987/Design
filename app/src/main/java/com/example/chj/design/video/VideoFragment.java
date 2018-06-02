@@ -1,15 +1,20 @@
 package com.example.chj.design.video;
 
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
+import com.example.chj.design.MainActivity;
 import com.example.chj.design.R;
 import com.example.chj.design.base.BaseFragment;
 import com.example.chj.design.model.entity.Book;
 import com.example.chj.design.model.entity.VideoItem;
 import com.example.chj.design.video.adapter.VideoAdapter;
 import com.example.chj.design.widget.itemdecoration.DividerItemDecoration;
+import com.example.chj.design.widget.statusview.LoadingAndRetryManager;
+import com.example.chj.design.widget.statusview.OnLoadingAndRetryListener;
 
 import java.util.List;
 
@@ -25,6 +30,7 @@ public class VideoFragment extends BaseFragment implements VideoFragmentContract
     RecyclerView recyclerVideo;
     private VideoPresenter mPresenter;
     private VideoAdapter adapter;
+    private LoadingAndRetryManager manager;
 
     public static VideoFragment newInstance() {
         VideoFragment fragment = new VideoFragment();
@@ -39,6 +45,17 @@ public class VideoFragment extends BaseFragment implements VideoFragmentContract
     }
 
     @Override
+    protected void initWidget(View root) {
+        NestedScrollView rootView = ((MainActivity) mContext).nestedScrollViewiew;
+        manager = LoadingAndRetryManager.generate(rootView, new OnLoadingAndRetryListener() {
+            @Override
+            public void setRetryEvent(View retryView) {
+
+            }
+        });
+    }
+
+    @Override
     protected void initData() {
         mPresenter.getVideoList();
     }
@@ -50,12 +67,12 @@ public class VideoFragment extends BaseFragment implements VideoFragmentContract
 
     @Override
     public void showLoading() {
-
+        manager.showLoading();
     }
 
     @Override
-    public void hitLoading() {
-
+    public void hideLoading() {
+        manager.showContent();
     }
 
     @Override

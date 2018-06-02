@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.example.chj.design.utils.FileUtils;
 import com.example.chj.design.utils.LogUtils;
 import com.example.chj.design.widget.CustomProgressDialog;
+import com.example.chj.design.widget.statusview.LoadingAndRetryManager;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -78,6 +79,14 @@ public class App extends Application {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             FileUtils.init(this);
         }
+
+        initStatusView();
+    }
+
+    private void initStatusView() {
+        LoadingAndRetryManager.BASE_RETRY_LAYOUT_ID = R.layout.base_retry;
+        LoadingAndRetryManager.BASE_LOADING_LAYOUT_ID = R.layout.base_loading;
+        LoadingAndRetryManager.BASE_EMPTY_LAYOUT_ID = R.layout.base_empty;
     }
 
     /**
