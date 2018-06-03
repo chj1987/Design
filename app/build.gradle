@@ -72,4 +72,6 @@ dependencies {
     compile 'com.orhanobut:logger:1.15'
 
     compile 'com.airbnb.android:lottie:1.0.1'
+
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 }
