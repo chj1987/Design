@@ -8,8 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="TranslucentTheme" parent="AppTheme">
-    </style>
+    <style name="TranslucentTheme" parent="AppTheme"></style>
 
     <style name="CustomProgressDialog" parent="@style/CustomDialog">
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -22,5 +21,9 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+    </style>
+
+    <style name="AppThemeProgress">
+        <item name="colorAccent">#FFD700</item> <!-- Whatever color you want-->
     </style>
 </resources>

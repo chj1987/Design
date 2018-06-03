@@ -31,7 +31,7 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.item_video, parent, false);
+        View view = inflater.inflate(R.layout.item_movie_video, parent, false);
         return new ViewHolder(view);
     }
 
