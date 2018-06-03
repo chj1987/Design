@@ -14,7 +14,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -55,7 +54,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected Unbinder bind;
     protected TextView titleText;
     // protected ProgressActivity viewStstus;
-    protected FrameLayout container;
+    public FrameLayout mRootContainer;
     protected LinearLayout baseTitle;
     protected Toolbar toolbar;
     protected BottomNavigationBar bottomBar;
@@ -65,8 +64,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
     protected ProgressDialog dialogWait;
     private Fragment mFragment;
-
-    public NestedScrollView nestedScrollViewiew;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -143,9 +140,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     private void setChildContentView(int layoutResID) {
         // viewStstus = (ProgressActivity) findViewById(R.id.view_status);
         bottomBar = (BottomNavigationBar) findViewById(R.id.bottombar);
-        container = (FrameLayout) findViewById(R.id.fl_activity_child_container);
+        mRootContainer = (FrameLayout) findViewById(R.id.fl_activity_child_container);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        nestedScrollViewiew = (NestedScrollView) findViewById(R.id.nested_scrollview);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -153,9 +149,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         }
         View childView = LayoutInflater.from(this).inflate(layoutResID, null);
-        if (container != null) {
-            container.removeAllViews();
-            container.addView(childView);
+        if (mRootContainer != null) {
+            mRootContainer.removeAllViews();
+            mRootContainer.addView(childView);
         }
 
         dialogWait = new ProgressDialog(this);

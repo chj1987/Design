@@ -1,9 +1,5 @@
 package com.example.chj.design.video;
 
-import android.support.v4.widget.NestedScrollView;
-import android.view.ViewTreeObserver;
-
-import com.example.chj.design.MainActivity;
 import com.example.chj.design.model.entity.Video;
 import com.example.chj.design.model.entity.VideoItem;
 import com.example.chj.design.model.source.IDataSource;
@@ -73,17 +69,6 @@ public class VideoPresenter implements VideoFragmentContract.Presenter {
                         }
 
                         mVideoFragmentView.showVideoLists(itemArrayList);
-                        final NestedScrollView scrollview = ((MainActivity) mVideoFragmentView.getActivity()).nestedScrollViewiew;
-                        scrollview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                            @Override
-                            public void onGlobalLayout() {
-                                scrollview.post(new Runnable() {
-                                    public void run() {
-                                        scrollview.scrollTo(0, 0);
-                                    }
-                                });
-                            }
-                        });
                         mVideoFragmentView.hideLoading();
                     }
 

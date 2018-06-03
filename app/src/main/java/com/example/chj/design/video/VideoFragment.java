@@ -1,10 +1,10 @@
 package com.example.chj.design.video;
 
 import android.os.Bundle;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.example.chj.design.MainActivity;
 import com.example.chj.design.R;
@@ -46,7 +46,7 @@ public class VideoFragment extends BaseFragment implements VideoFragmentContract
 
     @Override
     protected void initWidget(View root) {
-        NestedScrollView rootView = ((MainActivity) mContext).nestedScrollViewiew;
+        FrameLayout rootView = ((MainActivity) mContext).mRootContainer;
         manager = LoadingAndRetryManager.generate(rootView, new OnLoadingAndRetryListener() {
             @Override
             public void setRetryEvent(View retryView) {
