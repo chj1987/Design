@@ -6,15 +6,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.chj.design.App;
 import com.example.chj.design.MainActivity;
 import com.example.chj.design.R;
 import com.example.chj.design.model.entity.VideoItem;
+import com.example.chj.design.widget.MediaController;
+import com.pili.pldroid.player.AVOptions;
+import com.pili.pldroid.player.PLOnInfoListener;
 import com.pili.pldroid.player.widget.PLVideoTextureView;
 
 import java.util.List;
@@ -26,11 +32,12 @@ import butterknife.ButterKnife;
  * Created by ff on 2018/6/1.
  */
 
-public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
     private Context mContext;
     private List<VideoItem> list;
     private LayoutInflater inflater;
     private App app;
+    private ViewHolder mCurViewHolder;
 
     public VideoAdapter(Activity activity, List<VideoItem> list) {
         mContext = activity;
@@ -39,15 +46,27 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         app = ((MainActivity) activity).app;
     }
 
+
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.item_movie_video, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onViewDetachedFromWindow(ViewHolder holder) {
+        holder.videoTextureView.pause();
+        holder.loadingView.setVisibility(View.GONE);
+        holder.coverImage.setVisibility(View.VISIBLE);
+        holder.coverStopPlay.setVisibility(View.VISIBLE);
+    }
 
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.videoPath = list.get(position).getVideoPath();
+        Glide.with(mContext)
+                .load(list.get(position).getCoverPath())
+                .into(holder.coverImage);
     }
 
     @Override
@@ -58,6 +77,16 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.video_texture_view)
         PLVideoTextureView videoTextureView;
+        @BindView(R.id.controller_stop_play)
+        ImageButton controllerStopPlay;
+        @BindView(R.id.controller_current_time)
+        TextView controllerCurrentTime;
+        @BindView(R.id.controller_progress_bar)
+        SeekBar controllerProgressBar;
+        @BindView(R.id.controller_end_time)
+        TextView controllerEndTime;
+        @BindView(R.id.media_controller)
+        MediaController mediaController;
         @BindView(R.id.cover_image)
         ImageView coverImage;
         @BindView(R.id.cover_stop_play)
@@ -70,15 +99,84 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         TextView nameText;
         @BindView(R.id.ll_detail)
         LinearLayout llDetail;
+        @BindView(R.id.video_root)
+        FrameLayout videoRoot;
+        String videoPath;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             initSize();
+
+            videoTextureView.setAVOptions(createAVOptions());
+            videoTextureView.setBufferingIndicator(loadingView);
+            videoTextureView.setMediaController(mediaController);
+            videoTextureView.setDisplayAspectRatio(PLVideoTextureView.ASPECT_RATIO_PAVED_PARENT);
+            videoTextureView.setLooping(false);
+
+            videoTextureView.setOnInfoListener(new PLOnInfoListener() {
+                @Override
+                public void onInfo(int i, int i1) {
+                    if (i == PLOnInfoListener.MEDIA_INFO_VIDEO_RENDERING_START) {
+                        coverImage.setVisibility(View.GONE);
+                        coverStopPlay.setVisibility(View.GONE);
+                        mediaController.hide();
+                    }
+                }
+            });
+            coverImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    stopCurVideoView();
+                    mCurViewHolder = ViewHolder.this;
+                    startCurVideoView();
+                }
+            });
         }
 
         private void initSize() {
-            app.setMLayoutParam(videoTextureView, 1f, 0.56f);
+            app.setMLayoutParam(videoRoot, 1f, 0.56f);
+            app.setMLayoutParam(coverImage, 1f, 0.56f);
+        }
+    }
+
+    public static AVOptions createAVOptions() {
+        AVOptions options = new AVOptions();
+        // the unit of timeout is ms
+        options.setInteger(AVOptions.KEY_PREPARE_TIMEOUT, 10 * 1000);
+        options.setInteger(AVOptions.KEY_LIVE_STREAMING, 0);
+        // 1 -> hw codec enable, 0 -> disable [recommended]
+        options.setInteger(AVOptions.KEY_MEDIACODEC, AVOptions.MEDIA_CODEC_SW_DECODE);
+        options.setInteger(AVOptions.KEY_PREFER_FORMAT, AVOptions.PREFER_FORMAT_MP4);
+        boolean disableLog = false;
+        options.setInteger(AVOptions.KEY_LOG_LEVEL, disableLog ? 5 : 0);
+        return options;
+    }
+
+    public void stopCurVideoView() {
+        if (mCurViewHolder != null) {
+            resetConfig();
+            mCurViewHolder.videoTextureView.stopPlayback();
+            mCurViewHolder.loadingView.setVisibility(View.GONE);
+            mCurViewHolder.coverImage.setVisibility(View.VISIBLE);
+            mCurViewHolder.coverStopPlay.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void startCurVideoView() {
+        if (mCurViewHolder != null) {
+            mCurViewHolder.videoTextureView.setVideoPath(mCurViewHolder.videoPath);
+            mCurViewHolder.videoTextureView.start();
+            mCurViewHolder.loadingView.setVisibility(View.VISIBLE);
+            mCurViewHolder.coverStopPlay.setVisibility(View.GONE);
+        }
+    }
+
+    private void resetConfig() {
+        if (mCurViewHolder != null) {
+            mCurViewHolder.videoTextureView.setRotation(0);
+            mCurViewHolder.videoTextureView.setMirror(false);
+            mCurViewHolder.videoTextureView.setDisplayAspectRatio(PLVideoTextureView.ASPECT_RATIO_PAVED_PARENT);
         }
     }
 }
