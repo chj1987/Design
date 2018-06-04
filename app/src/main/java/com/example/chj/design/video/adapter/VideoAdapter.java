@@ -79,7 +79,6 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         private void initSize() {
             app.setMLayoutParam(videoTextureView, 1f, 0.56f);
-            app.setMLayoutParam(llDetail, 1f, 0.06f);
         }
     }
 }
