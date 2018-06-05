@@ -58,7 +58,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected LinearLayout baseTitle;
     protected Toolbar toolbar;
     protected BottomNavigationBar bottomBar;
-    protected FloatingActionButton mFloatingActionButton;
+    public FloatingActionButton mFloatingActionButton;
     protected LinearLayout mMenuLl;
     private DrawerLayout mRootDl;
     private ActionBarDrawerToggle toggle;

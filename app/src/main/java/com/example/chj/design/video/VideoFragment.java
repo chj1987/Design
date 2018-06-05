@@ -1,6 +1,7 @@
 package com.example.chj.design.video;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -31,6 +32,8 @@ public class VideoFragment extends BaseFragment implements VideoFragmentContract
     private VideoPresenter mPresenter;
     private VideoAdapter adapter;
     private LoadingAndRetryManager manager;
+    private int mScrollTotal;
+    private FloatingActionButton ftb;
 
     public static VideoFragment newInstance() {
         VideoFragment fragment = new VideoFragment();
@@ -46,11 +49,25 @@ public class VideoFragment extends BaseFragment implements VideoFragmentContract
 
     @Override
     protected void initWidget(View root) {
+        ftb = ((MainActivity) getActivity()).mFloatingActionButton;
         FrameLayout rootView = ((MainActivity) mContext).mRootContainer;
         manager = LoadingAndRetryManager.generate(rootView, new OnLoadingAndRetryListener() {
             @Override
             public void setRetryEvent(View retryView) {
 
+            }
+        });
+
+        recyclerVideo.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                mScrollTotal += dy;
+                if (dy > 5) {
+                    ftb.hide();
+                } else if (dy < -5) {
+                    ftb.show();
+                }
             }
         });
     }
