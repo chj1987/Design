@@ -111,6 +111,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             videoTextureView.setAVOptions(createAVOptions());
             videoTextureView.setBufferingIndicator(loadingView);
             videoTextureView.setMediaController(mediaController);
+            videoTextureView.setTag(null);
             videoTextureView.setDisplayAspectRatio(PLVideoTextureView.ASPECT_RATIO_PAVED_PARENT);
             videoTextureView.setLooping(false);
 

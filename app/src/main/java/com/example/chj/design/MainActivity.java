@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.FrameLayout;
 
 import com.example.chj.design.base.BaseActivity;
+import com.example.chj.design.http.API;
 import com.example.chj.design.model.DataRespositoryImpl;
 import com.example.chj.design.model.source.IDataSource;
 import com.example.chj.design.model.source.Remote.RemoteResponsitoryImpl;
@@ -42,7 +43,7 @@ public class MainActivity extends BaseActivity {
         if (videoFragment == null) {
             videoFragment = VideoFragment.newInstance();
         }
-        IDataSource dataSource = RemoteResponsitoryImpl.getInstance();
+        IDataSource dataSource = new RemoteResponsitoryImpl(API.BASE_URL);
         presenter = new VideoPresenter(videoFragment, DataRespositoryImpl.getInstance(dataSource, dataSource));
 
         addFragment(R.id.container, videoFragment);

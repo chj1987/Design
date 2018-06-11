@@ -16,14 +16,10 @@ public class RemoteResponsitoryImpl implements IDataSource {
 
     private IRetrofitService mRetrofitService;
 
-    private static RemoteResponsitoryImpl mInstance = new RemoteResponsitoryImpl();
+    public RemoteResponsitoryImpl(String BASE_URL) {
+        RetrofitHelp retrofitHelp = new RetrofitHelp.Builder(BASE_URL).build();
+        mRetrofitService = retrofitHelp.getService();
 
-    private RemoteResponsitoryImpl() {
-        mRetrofitService = RetrofitHelp.getInstance().getService();
-    }
-
-    public static RemoteResponsitoryImpl getInstance() {
-        return mInstance;
     }
 
     @Override

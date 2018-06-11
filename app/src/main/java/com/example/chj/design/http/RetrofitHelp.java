@@ -11,35 +11,42 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.example.chj.design.http.API.BASE_URL;
-
 /**
  * Created by ff on 2018/5/30.
  */
 
 public class RetrofitHelp {
-
-    private final OkHttpClient mClient;
     private final Retrofit mRetrofit;
+    private String BASE_URL;
 
-    private static RetrofitHelp mInstance = new RetrofitHelp();
-
-    private RetrofitHelp() {
-        mClient = new OkHttpClient.Builder()
-                .addInterceptor(new LoggingInterceptor())
-                .connectTimeout(Constant.DEFAULT_TIMEOUT, TimeUnit.SECONDS)
-                .build();
-
-        mRetrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(mClient)
-                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().create()))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
+    private RetrofitHelp(Builder builder) {
+        this.BASE_URL = builder.BASE_URL;
+        this.mRetrofit = builder.mRetrofit;
     }
 
-    public static RetrofitHelp getInstance() {
-        return mInstance;
+    public static class Builder {
+        private String BASE_URL;
+        private final OkHttpClient mClient;
+        public final Retrofit mRetrofit;
+
+        public Builder(String BASE_URL) {
+            this.BASE_URL = BASE_URL;
+            mClient = new OkHttpClient.Builder()
+                    .addInterceptor(new LoggingInterceptor())
+                    .connectTimeout(Constant.DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                    .build();
+
+            mRetrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .client(mClient)
+                    .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().create()))
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .build();
+        }
+
+        public RetrofitHelp build() {
+            return new RetrofitHelp(this);
+        }
     }
 
     public IRetrofitService getService() {
