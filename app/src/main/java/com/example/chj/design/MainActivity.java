@@ -58,7 +58,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 .addItem(new BottomNavigationItem(R.mipmap.ic_message_white_24dp, "消息"))
                 .addItem(new BottomNavigationItem(R.mipmap.ic_discover_white_24dp, "其他"))
                 .addItem(new BottomNavigationItem(R.mipmap.ic_account_circle_white_24dp, "我的"))
-                .setFirstSelectedPosition(0)
+                .setFirstSelectedPosition(1)
                 .initialise();
 
         bottomBar.setTabSelectedListener(this)
@@ -112,12 +112,13 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 transaction.replace(R.id.container, mShopingFragment);
                 break;
             case 3:
-                if (mMyFragment != null) {
+                if (mMyFragment == null) {
                     mMyFragment = MyFragment.newInstance();
                 }
-                transaction.add(R.id.container, mMyFragment);
+                transaction.replace(R.id.container, mMyFragment);
                 break;
         }
+        transaction.commit();
     }
 
     @Override

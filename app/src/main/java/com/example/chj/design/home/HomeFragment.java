@@ -2,6 +2,7 @@ package com.example.chj.design.home;
 
 import android.os.Bundle;
 
+import com.example.chj.design.R;
 import com.example.chj.design.base.BaseFragment;
 
 /**
@@ -11,7 +12,7 @@ import com.example.chj.design.base.BaseFragment;
 public class HomeFragment extends BaseFragment {
     @Override
     protected int getLayoutID() {
-        return 0;
+        return R.layout.home_fragment;
     }
 
     public static HomeFragment newInstance() {

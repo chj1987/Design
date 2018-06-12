@@ -2,6 +2,7 @@ package com.example.chj.design.my;
 
 import android.os.Bundle;
 
+import com.example.chj.design.R;
 import com.example.chj.design.base.BaseFragment;
 
 /**
@@ -12,13 +13,13 @@ public class MyFragment extends BaseFragment {
 
     @Override
     protected int getLayoutID() {
-        return 0;
+        return R.layout.my_fragment;
     }
 
     public static MyFragment newInstance() {
         MyFragment fragment = new MyFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
-        return null;
+        return fragment;
     }
 }
