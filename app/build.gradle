@@ -80,4 +80,5 @@ dependencies {
 
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.github.pinguo-zhouwei:MZBannerView:v2.0.2'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
 }
