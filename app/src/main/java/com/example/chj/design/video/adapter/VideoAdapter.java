@@ -22,7 +22,11 @@ import com.example.chj.design.widget.MediaController;
 import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLOnInfoListener;
 import com.pili.pldroid.player.widget.PLVideoTextureView;
+import com.zhouwei.mzbanner.MZBannerView;
+import com.zhouwei.mzbanner.holder.MZHolderCreator;
+import com.zhouwei.mzbanner.holder.MZViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,7 +36,14 @@ import butterknife.ButterKnife;
  * Created by ff on 2018/6/1.
  */
 
-public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
+public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final int TYPE_HEAD = 0;
+    private static final int TYPE_VIDEO = 1;
+
+    /*
+   * 推荐位数据
+   */
+    private ArrayList<Integer> images = new ArrayList<>();
     private Context mContext;
     private List<VideoItem> list;
     private LayoutInflater inflater;
@@ -44,34 +55,86 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         this.list = list;
         inflater = LayoutInflater.from(activity);
         app = ((MainActivity) activity).app;
+        images.add(R.mipmap.movie5);
+        images.add(R.mipmap.movie6);
+        images.add(R.mipmap.movie7);
+        images.add(R.mipmap.movie8);
+        images.add(R.mipmap.movie9);
     }
 
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.item_movie_video, parent, false);
-        return new ViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == TYPE_HEAD) {
+            View view = inflater.inflate(R.layout.item_movie_head, parent, false);
+            return new HeadHolder(view);
+        } else {
+            View view = inflater.inflate(R.layout.item_movie_video, parent, false);
+            return new ViewHolder(view);
+        }
     }
 
     @Override
-    public void onViewDetachedFromWindow(ViewHolder holder) {
-        holder.videoTextureView.pause();
-        holder.loadingView.setVisibility(View.GONE);
-        holder.coverImage.setVisibility(View.VISIBLE);
-        holder.coverStopPlay.setVisibility(View.VISIBLE);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof HeadHolder) {
+            ((HeadHolder) holder).banner.setPages(images, new MZHolderCreator<BannerViewHolder>() {
+                @Override
+                public BannerViewHolder createViewHolder() {
+                    return new BannerViewHolder();
+                }
+
+            });
+            ((HeadHolder) holder).banner.start();
+        } else {
+            ((ViewHolder) holder).videoPath = list.get(position - 1).getVideoPath();
+            Glide.with(mContext)
+                    .load(list.get(position - 1).getCoverPath())
+                    .into(((ViewHolder) holder).coverImage);
+        }
+
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.videoPath = list.get(position).getVideoPath();
-        Glide.with(mContext)
-                .load(list.get(position).getCoverPath())
-                .into(holder.coverImage);
+    public int getItemViewType(int position) {
+        if (position == 0) {
+            return TYPE_HEAD;
+        } else {
+            return TYPE_VIDEO;
+        }
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+        if (holder instanceof ViewHolder) {
+            ((ViewHolder) holder).videoTextureView.pause();
+            ((ViewHolder) holder).loadingView.setVisibility(View.GONE);
+            ((ViewHolder) holder).coverImage.setVisibility(View.VISIBLE);
+            ((ViewHolder) holder).coverStopPlay.setVisibility(View.VISIBLE);
+        } else {
+            ((HeadHolder) holder).banner.pause();
+        }
+    }
+
+    @Override
+    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+        if (holder instanceof HeadHolder) {
+            ((HeadHolder) holder).banner.start();
+        }
     }
 
     @Override
     public int getItemCount() {
-        return list == null ? 0 : list.size();
+        return list == null ? 1 : (list.size() + 1);
+    }
+
+    public class HeadHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.banner)
+        MZBannerView banner;
+
+        public HeadHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -178,6 +241,22 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             mCurViewHolder.videoTextureView.setRotation(0);
             mCurViewHolder.videoTextureView.setMirror(false);
             mCurViewHolder.videoTextureView.setDisplayAspectRatio(PLVideoTextureView.ASPECT_RATIO_PAVED_PARENT);
+        }
+    }
+
+    private class BannerViewHolder implements MZViewHolder<Integer> {
+        ImageView mImageView;
+
+        @Override
+        public View createView(Context context) {
+            View view = LayoutInflater.from(context).inflate(R.layout.banner_item, null);
+            mImageView = (ImageView) view.findViewById(R.id.banner_image);
+            return view;
+        }
+
+        @Override
+        public void onBind(Context context, int position, Integer integer) {
+            mImageView.setImageResource(integer);
         }
     }
 }
